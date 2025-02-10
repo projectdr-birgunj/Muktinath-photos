@@ -19,7 +19,7 @@ async function uploadFile() {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/upload", {
+      const response = await fetch("http://103.175.180.62:3000/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
