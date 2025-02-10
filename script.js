@@ -1,38 +1,47 @@
-async function uploadFile() {
+async function uploadFiles() {
   const fileInput = document.getElementById("fileInput");
-  const status = document.getElementById("status");
+  const statusContainer = document.getElementById("statusContainer");
+  statusContainer.innerHTML = ""; // Clear previous status
 
   if (!fileInput.files.length) {
-    status.innerText = "Please select a file!";
+    statusContainer.innerHTML = "<p>Please select files!</p>";
     return;
   }
 
-  const file = fileInput.files[0];
-  const reader = new FileReader();
+  const files = Array.from(fileInput.files);
 
-  reader.onload = async function (event) {
-    let base64Content = event.target.result.split(",")[1]; // Remove prefix
+  for (const file of files) {
+    const fileStatus = document.createElement("div");
+    fileStatus.innerHTML = `<p>${file.name}: <span class="progress">0%</span></p>`;
+    statusContainer.appendChild(fileStatus);
 
-    const payload = {
-      fileName: file.name,
-      fileContent: base64Content,
+    const reader = new FileReader();
+    reader.onload = async function (event) {
+      let base64Content = event.target.result.split(",")[1];
+
+      const payload = {
+        fileName: file.name,
+        fileContent: base64Content,
+      };
+
+      try {
+        const response = await fetch("https://floating-lot-private-vertical.trycloudflare.com/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          fileStatus.innerHTML = `<p>${file.name}: ✅ Uploaded!</p>`;
+        } else {
+          fileStatus.innerHTML = `<p>${file.name}: ❌ Upload failed!</p>`;
+        }
+      } catch (error) {
+        fileStatus.innerHTML = `<p>${file.name}: ❌ Error connecting to server!</p>`;
+      }
     };
 
-    try {
-      const response = await fetch("https://floating-lot-private-vertical.trycloudflare.com/upload", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      const result = await response.json();
-      status.innerText = result.success
-        ? `✅ ${file.name} uploaded!`
-        : `❌ Upload failed!`;
-    } catch (error) {
-      status.innerText = "❌ Error connecting to server!";
-    }
-  };
-
-  reader.readAsDataURL(file);
+    reader.readAsDataURL(file);
+  }
 }
