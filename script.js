@@ -1,8 +1,6 @@
 const GITHUB_USERNAME = "projectdr-birgunj"; // Replace with your GitHub username
 const REPO_NAME = "Muktinath-photos"; // Replace with your repository name
 const BRANCH = "main"; // Change if using a different branch
-const ACCESS_TOKEN =
-  "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"; // ⚠️ Store this securely in a backend!
 
 async function uploadFile() {
   const fileInput = document.getElementById("fileInput");
