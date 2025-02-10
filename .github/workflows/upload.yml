@@ -1,27 +1,31 @@
-name: Upload Files to GitHub  # Name of the workflow
+name: Upload File to Repo
 
 on:
-  push:  # Runs the workflow whenever you push changes
-    branches:
-      - main  # Change this if using a different branch
-  workflow_dispatch:  # Allows manual triggering from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'Filename to upload'
+        required: true
+      content:
+        description: 'Base64 encoded file content'
+        required: true
 
 jobs:
   upload:
-    runs-on: ubuntu-latest  # Runs the job on GitHub's Ubuntu environment
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3  # Clones the repo so we can modify it
+        uses: actions/checkout@v3
 
-      - name: Configure Git
+      - name: Save Uploaded File
         run: |
-          git config --global user.email "projectdr.birgunj@gmail.com"
+          echo "${{ github.event.inputs.content }}" | base64 --decode > uploads/${{ github.event.inputs.filename }}
+
+      - name: Commit and Push Changes
+        run: |
+            git config --global user.email "projectdr.birgunj@gmail.com"
           git config --global user.name "projectdr-birgunj"
-
-      - name: Upload File to Repo
-        run: |
-          echo "Your file content" > uploads/example.txt  # Create a test file
-          git add uploads/example.txt
-          git commit -m "Upload example.txt via GitHub Actions"
+          git add uploads/
+          git commit -m "Uploaded ${{ github.event.inputs.filename }} via GitHub Actions"
           git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/projectdr-birgunj/Muktinath-photos.git main
