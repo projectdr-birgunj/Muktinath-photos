@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       filename:
-        description: 'Filename to upload'
+        description: "Filename to upload"
         required: true
       content:
-        description: 'Base64 encoded file content'
+        description: "Base64 encoded file content"
         required: true
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
 
       - name: Commit and Push Changes
         run: |
-            git config --global user.email "projectdr.birgunj@gmail.com"
+          git config --global user.email "projectdr.birgunj@gmail.com"
           git config --global user.name "projectdr-birgunj"
           git add uploads/
           git commit -m "Uploaded ${{ github.event.inputs.filename }} via GitHub Actions"
