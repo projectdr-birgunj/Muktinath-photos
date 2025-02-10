@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Upload to GitHub</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-        input { margin: 10px; }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      input {
+        margin: 10px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h2>Upload a File to GitHub</h2>
-    <input type="file" id="fileInput">
+    <input type="file" id="fileInput" />
     <button onclick="uploadFile()">Upload</button>
     <p id="status"></p>
 
+    <!-- <input type="file" id="fileInput" multiple />
+    <button id="uploadBtn">Upload</button>
+    <p id="status"></p> -->
+
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
