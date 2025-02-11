@@ -3,27 +3,42 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Upload to GitHub</title>
+    <title>File Uploader</title>
     <style>
       body {
         font-family: Arial, sans-serif;
         text-align: center;
-        margin-top: 50px;
       }
-      input {
-        margin: 10px;
+      #statusContainer {
+        margin-top: 20px;
+      }
+      .file-status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 10px 0;
+      }
+      .progress-bar-container {
+        width: 100%;
+        background-color: #eee;
+        height: 10px;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .progress-bar {
+        height: 100%;
+        width: 0%;
+        background-color: #4caf50;
+        transition: width 0.3s;
       }
     </style>
   </head>
   <body>
-    <h2>Upload a File to GitHub</h2>
-    <input type="file" id="fileInput" />
-    <button onclick="uploadFile()">Upload</button>
-    <p id="status"></p>
+    <h1>Upload Files</h1>
+    <input type="file" id="fileInput" multiple />
+    <button onclick="uploadFiles()">Upload</button>
 
-    <!-- <input type="file" id="fileInput" multiple />
-    <button id="uploadBtn">Upload</button>
-    <p id="status"></p> -->
+    <div id="statusContainer"></div>
 
     <script src="script.js"></script>
   </body>
