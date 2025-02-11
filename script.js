@@ -25,7 +25,7 @@ async function uploadFiles() {
       };
 
       try {
-        const response = await fetch("https://baskets-fe-italiano-ict.trycloudflare.com/upload", {
+        const response = await fetch("https://phase-optics-shirt-owen.trycloudflare.com/upload", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
